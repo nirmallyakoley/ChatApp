@@ -1,0 +1,13 @@
+C:\Users\gtaadmin\Desktop\ChatApp\ChattingClient\ChattingClient\bin\Debug\netcoreapp3.1\ChattingClient.exe
+C:\Users\gtaadmin\Desktop\ChatApp\ChattingClient\ChattingClient\bin\Debug\netcoreapp3.1\ChattingClient.deps.json
+C:\Users\gtaadmin\Desktop\ChatApp\ChattingClient\ChattingClient\bin\Debug\netcoreapp3.1\ChattingClient.runtimeconfig.json
+C:\Users\gtaadmin\Desktop\ChatApp\ChattingClient\ChattingClient\bin\Debug\netcoreapp3.1\ChattingClient.runtimeconfig.dev.json
+C:\Users\gtaadmin\Desktop\ChatApp\ChattingClient\ChattingClient\bin\Debug\netcoreapp3.1\ChattingClient.dll
+C:\Users\gtaadmin\Desktop\ChatApp\ChattingClient\ChattingClient\bin\Debug\netcoreapp3.1\ChattingClient.pdb
+C:\Users\gtaadmin\Desktop\ChatApp\ChattingClient\ChattingClient\obj\Debug\netcoreapp3.1\ChattingClient.csproj.AssemblyReference.cache
+C:\Users\gtaadmin\Desktop\ChatApp\ChattingClient\ChattingClient\obj\Debug\netcoreapp3.1\ChattingClient.AssemblyInfoInputs.cache
+C:\Users\gtaadmin\Desktop\ChatApp\ChattingClient\ChattingClient\obj\Debug\netcoreapp3.1\ChattingClient.AssemblyInfo.cs
+C:\Users\gtaadmin\Desktop\ChatApp\ChattingClient\ChattingClient\obj\Debug\netcoreapp3.1\ChattingClient.csproj.CoreCompileInputs.cache
+C:\Users\gtaadmin\Desktop\ChatApp\ChattingClient\ChattingClient\obj\Debug\netcoreapp3.1\ChattingClient.dll
+C:\Users\gtaadmin\Desktop\ChatApp\ChattingClient\ChattingClient\obj\Debug\netcoreapp3.1\ChattingClient.pdb
+C:\Users\gtaadmin\Desktop\ChatApp\ChattingClient\ChattingClient\obj\Debug\netcoreapp3.1\ChattingClient.genruntimeconfig.cache
