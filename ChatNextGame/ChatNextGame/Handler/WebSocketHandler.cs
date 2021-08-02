@@ -1,4 +1,6 @@
-﻿using ChatNextGame.Connection;
+﻿using ChatNextGame.BO;
+using ChatNextGame.Connection;
+using ChatNextGame.DBOperation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +14,11 @@ namespace ChatNextGame.Handler
     public class WebSocketHandler
     {
         protected ConnectionManager WebSocketConnectionManager { get; set; }
-
-        public WebSocketHandler(ConnectionManager webSocketConnectionManager)
+        private IDBOpeartion _dbOperation;
+        public WebSocketHandler(ConnectionManager webSocketConnectionManager, IDBOpeartion dbOperation)
         {
             WebSocketConnectionManager = webSocketConnectionManager;
+            _dbOperation = dbOperation;
         }
 
         public  async Task OnConnected(WebSocket socket)
@@ -23,8 +26,8 @@ namespace ChatNextGame.Handler
             if (WebSocketConnectionManager.SocketCount() <= 20)
             {
                 await WebSocketConnectionManager.AddSocket(socket);
-                var socketId = WebSocketConnectionManager.GetId(socket);
-                await SendMessageToAllAsync($"{socketId} is now connected");
+                //var socketId = WebSocketConnectionManager.GetId(socket);
+                //await SendMessageToAllAsync($"{socketId} is now connected");
             }
             else 
             {
@@ -62,9 +65,24 @@ namespace ChatNextGame.Handler
        
         public async Task ReceiveAsync(WebSocket socket, WebSocketReceiveResult result, byte[] buffer)
         {
-            var socketId = WebSocketConnectionManager.GetId(socket);
-            var message = $"{socketId} said: {Encoding.UTF8.GetString(buffer, 0, result.Count)}";
-            await SendMessageToAllAsync(message);
+            var message = Encoding.UTF8.GetString(buffer, 0, result.Count);
+            if (message.Contains(":"))
+            {
+                string[] strPlit = message.Split(':');
+                await SendMessageToAllAsync($"{strPlit[0]} said :{strPlit[1]}");
+
+                //Store chat data//
+                await StoreChatData(new UserMessage { Message= strPlit[1] , UserName= strPlit[0] });
+                //
+            }
+            else
+            {
+                await SendMessageToAllAsync(message);
+            }
+        }
+        private async Task StoreChatData(UserMessage userMessage)
+        {
+            await _dbOperation.AddtoDB(userMessage);
         }
     }
 }

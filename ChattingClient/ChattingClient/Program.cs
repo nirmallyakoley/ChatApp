@@ -10,35 +10,60 @@ namespace ChattingClient
 
     public class Program
     {
-        public static void Main(string[] args)
+        static string name;
+        public static async Task Main(string[] args)
         {
-          
-            //var processName= Process.GetCurrentProcess().ProcessName;
-            //if (Process.GetProcessesByName(processName).Length <= 2)
-            //{
-            //    Process.Start("ChattingClient.exe");
 
-            //}
-            RunWebSockets().GetAwaiter().GetResult();
+            Console.Write("Enter your name :");
+            name = Console.ReadLine();
+            if (ValidateUser(name))
+            {              
+              await RunWebSockets();
+            }
+        }
+
+        private static async Task FetchOldMessage(string name)
+        {
+            //connect DB and populate old message//
+            await Task.Run(()=> { Console.WriteLine("Old Messages......."); });
+        }
+
+        private static bool ValidateUser(string name)
+        {
+            //Validate user logic//
+            return true;
         }
 
         private static async Task RunWebSockets()
         {
             var client = new ClientWebSocket();
             await client.ConnectAsync(new Uri("ws://localhost:5000/ws"), CancellationToken.None);
-
+           
             Console.WriteLine("Connected!");
+            await client.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes($"{name} joined chat room")), WebSocketMessageType.Text, true, CancellationToken.None);
+
+            ////populate old messages///
+            await FetchOldMessage(name);
+            //---------------------------//
 
             var sending = Task.Run(async () =>
             {
                 string line;
                 while ((line = Console.ReadLine()) != null && line != String.Empty)
                 {
-                    var bytes = Encoding.UTF8.GetBytes(line);
+                    string msg = $"{name}:{line}";
+                    var bytes = Encoding.UTF8.GetBytes(msg);
                     await client.SendAsync(new ArraySegment<byte>(bytes), WebSocketMessageType.Text, true, CancellationToken.None);
+                    if (line == "CLOSE")
+                    {
+                        break;
+                    }
                 }
 
-                await client.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, "", CancellationToken.None);
+                if (line == "CLOSE")
+                {
+                    await client.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, "Closing Socket", CancellationToken.None);
+                }
             });
 
             var receiving = Receiving(client);

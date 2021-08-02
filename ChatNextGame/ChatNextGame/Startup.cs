@@ -1,4 +1,5 @@
 using ChatNextGame.Connection;
+using ChatNextGame.DBOperation;
 using ChatNextGame.Handler;
 using ChatNextGame.Middleware;
 using Microsoft.AspNetCore.Builder;
@@ -27,8 +28,9 @@ namespace ChatNextGame
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<ConnectionManager>();
+            services.AddSingleton<IDBOpeartion, ConcreteDBOperation>();
             services.AddSingleton<WebSocketHandler>();
-            services.AddRazorPages();          
+            services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
